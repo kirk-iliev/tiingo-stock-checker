@@ -1,0 +1,1 @@
+# tiingo-stock-checker
