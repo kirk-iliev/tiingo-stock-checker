@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Search</title>
+    <style>
+        /* Add your CSS styles here */
+        /* Center align the content */
+        body {
+            text-align: center;
+            padding-top: 50px;
+        }
+        /* Style the input and button */
+        input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock Search</h1>
+    <form id="stockSearchForm">
+        <label for="tickerInput">Enter stock ticker symbol:</label>
+        <input type="text" id="tickerInput" name="ticker" placeholder="e.g., AAPL" required>
+        <button type="button" id="searchButton">Search</button>
+        <button type="button" id="clearButton">Clear Input</button>
+    </form>
+
+    <script>
+        document.getElementById('clearButton').addEventListener('click', function() {
+            document.getElementById('tickerInput').value = '';
+        });
+
+        document.getElementById('searchButton').addEventListener('click', function() {
+            var ticker = document.getElementById('tickerInput').value;
+            if (ticker) {
+                // Make GET request to Flask backend
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/search?ticker=' + ticker, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        // Handle response from backend
+                        console.log(xhr.responseText);
+                    }
+                };
+                xhr.send();
+            } else {
+                alert('Please enter a stock ticker symbol.');
+            }
+        });
+    </script>
+</body>
+</html>
